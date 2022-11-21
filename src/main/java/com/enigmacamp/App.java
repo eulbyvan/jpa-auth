@@ -10,13 +10,6 @@ import java.sql.SQLException;
 public class App {
     public static void main(String[] args) {
         try {
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
-            EntityManager em = emf.createEntityManager();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
             MasterMenu.run();
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -1,9 +1,13 @@
 package com.enigmacamp.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
-public class User {
+//@NamedQueries({
+//        @NamedQuery(name = "User.findById", query = "SELECT user FROM User user WHERE user.id = :id")
+//})
+
+@Entity
+public class Users {
     @Id
     @Column(name = "username", nullable = false)
     private String username;

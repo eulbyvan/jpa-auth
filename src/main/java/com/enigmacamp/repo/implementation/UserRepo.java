@@ -1,6 +1,6 @@
 package com.enigmacamp.repo.implementation;
 
-import com.enigmacamp.model.User;
+import com.enigmacamp.model.Users;
 import com.enigmacamp.repo.IUserRepo;
 
 import java.util.List;
@@ -12,12 +12,12 @@ public class UserRepo implements IUserRepo {
     }
 
     @Override
-    public List<User> getRows() {
+    public List<Users> getRows() {
         return null;
     }
 
     @Override
-    public User getRow() {
+    public Users getRow() {
         return null;
     }
 
