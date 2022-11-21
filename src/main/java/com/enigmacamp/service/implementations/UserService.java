@@ -1,15 +1,22 @@
 package com.enigmacamp.service.implementations;
 
 import com.enigmacamp.model.User;
+import com.enigmacamp.repo.implementations.UserRepo;
 import com.enigmacamp.service.interfaces.IUserService;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
 public class UserService implements IUserService {
+    private UserRepo userRepo;
+
+    public UserService(UserRepo userRepo) {
+        this.userRepo = userRepo;
+    }
+
     @Override
     public Boolean signUp(EntityManager em, User user) {
-        return null;
+        return userRepo.create(em, user);
     }
 
     @Override

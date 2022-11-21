@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 //})
 
 @Entity
+@Table(name = "sys_user")
 public class User {
     @Id
     @Column(name = "username", nullable = false)
