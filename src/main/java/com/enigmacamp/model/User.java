@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 //})
 
 @Entity
-public class Users {
+public class User {
     @Id
     @Column(name = "username", nullable = false)
     private String username;
