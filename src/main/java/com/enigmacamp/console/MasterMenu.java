@@ -58,8 +58,6 @@ public abstract class MasterMenu {
                         System.out.println("new user added");
                     } catch (Exception e) {
                         throw new RuntimeException(e);
-                    } finally {
-                        em.close();
                     }
 
                     startMenu();
@@ -73,16 +71,15 @@ public abstract class MasterMenu {
                     String inputPassword = in.nextLine();
 
                     try {
-                        userService.userAuth(em, inputUsername, inputPassword);
+                        System.out.println(userService.userAuth(em, inputUsername, inputPassword));
                     } catch (Exception e) {
                         throw new RuntimeException(e);
-                    } finally {
-                        em.close();
                     }
 
                     startMenu();
                 } else if (selectedMenu.equalsIgnoreCase("0")) {
                     System.out.println("\n=== goodbye ===");
+                    em.close();
                     isClosed = true;
                     break;
                 } else {

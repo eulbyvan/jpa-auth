@@ -27,7 +27,7 @@ public class UserService implements IUserService {
 
     @Override
     public User findUser(EntityManager em, String username) {
-        return null;
+        return userRepo.getRow(em, username);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class UserService implements IUserService {
 
     @Override
     public Boolean userAuth(EntityManager em, String username, String password) {
-        User user = userRepo.getRow(em, username);
+        User user = findUser(em, username);
 
         String dbUsername = user.getUsername();
         String dbPassword = user.getPassword();

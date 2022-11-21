@@ -23,7 +23,7 @@ public class UserRepo implements IUserRepo {
 
     @Override
     public User getRow(EntityManager em, String username) {
-        TypedQuery<User> typedQuery = em.createNamedQuery("Student.findById", User.class);
+        TypedQuery<User> typedQuery = em.createNamedQuery("User.findById", User.class);
 
         typedQuery.setParameter("id", username);
 
