@@ -2,9 +2,9 @@ package com.enigmacamp.model;
 
 import jakarta.persistence.*;
 
-//@NamedQueries({
-//        @NamedQuery(name = "User.findById", query = "SELECT user FROM User user WHERE user.id = :id")
-//})
+@NamedQueries({
+        @NamedQuery(name = "User.findById", query = "SELECT user FROM User user WHERE user.username = :id")
+})
 
 @Entity
 @Table(name = "sys_user")

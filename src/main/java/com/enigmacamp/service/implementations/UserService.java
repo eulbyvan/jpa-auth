@@ -4,6 +4,7 @@ import com.enigmacamp.model.User;
 import com.enigmacamp.repo.implementations.UserRepo;
 import com.enigmacamp.service.interfaces.IUserService;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 
@@ -15,8 +16,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Boolean signUp(EntityManager em, User user) {
-        return userRepo.create(em, user);
+    public void signUp(EntityManager em, User user) {
+        userRepo.create(em, user);
     }
 
     @Override
@@ -25,17 +26,25 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User findUser() {
+    public User findUser(EntityManager em, String username) {
         return null;
     }
 
     @Override
-    public Boolean editUser(Integer id) {
-        return null;
+    public void editUser(EntityManager em, User user) {
     }
 
     @Override
-    public Boolean deleteUser(Integer id) {
-        return null;
+    public void deleteUser(EntityManager em, User user) {
+    }
+
+    @Override
+    public Boolean userAuth(EntityManager em, String username, String password) {
+        User user = userRepo.getRow(em, username);
+
+        String dbUsername = user.getUsername();
+        String dbPassword = user.getPassword();
+
+        return username.equals(dbUsername) && password.equals(dbPassword);
     }
 }

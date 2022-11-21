@@ -6,9 +6,10 @@ import jakarta.persistence.EntityManager;
 import java.util.List;
 
 public interface IUserService {
-    Boolean signUp(EntityManager em, User user);
+    void signUp(EntityManager em, User user);
     List<User> findUsers();
-    User findUser();
-    Boolean editUser(Integer id);
-    Boolean deleteUser(Integer id);
+    User findUser(EntityManager em, String username);
+    void editUser(EntityManager em, User user);
+    void deleteUser(EntityManager em, User user);
+    Boolean userAuth(EntityManager em, String username, String password);
 }

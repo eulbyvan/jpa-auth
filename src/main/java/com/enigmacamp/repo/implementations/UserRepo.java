@@ -3,17 +3,17 @@ package com.enigmacamp.repo.implementations;
 import com.enigmacamp.model.User;
 import com.enigmacamp.repo.interfaces.IUserRepo;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 
 public class UserRepo implements IUserRepo {
 
     @Override
-    public Boolean create(EntityManager em, User user) {
+    public void create(EntityManager em, User user) {
         em.getTransaction().begin();
         em.persist(user);
         em.getTransaction().commit();
-        return true;
     }
 
     @Override
@@ -22,17 +22,24 @@ public class UserRepo implements IUserRepo {
     }
 
     @Override
-    public User getRow() {
-        return null;
+    public User getRow(EntityManager em, String username) {
+        TypedQuery<User> typedQuery = em.createNamedQuery("Student.findById", User.class);
+
+        typedQuery.setParameter("id", username);
+
+        return typedQuery.getSingleResult();
     }
 
     @Override
-    public Boolean update(Integer id) {
-        return true;
+    public void update(EntityManager em, String id) {
     }
 
     @Override
-    public Boolean delete(Integer id) {
-        return true;
+    public void delete(EntityManager em, String id) {
     }
+
+//    @Override
+//    public Boolean auth(EntityManager em, String id) {
+//
+//    }
 }

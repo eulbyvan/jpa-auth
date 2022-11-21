@@ -1,5 +1,8 @@
 package com.enigmacamp.console;
 
+import com.enigmacamp.model.User;
+import com.enigmacamp.repo.implementations.UserRepo;
+import com.enigmacamp.service.implementations.UserService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -11,10 +14,8 @@ public abstract class MasterMenu {
     private static final Scanner in = new Scanner(System.in);
     private static Boolean isClosed = false;
     private static final EntityManager em = createEM();
-
-//    private static final UserRepo userRepo = new User();
-//    private static final ProductService productService = new ProductService(productRepo);
-
+    private static final UserRepo userRepo = new UserRepo();
+    private static final UserService userService = new UserService(userRepo);
     private static String selectMenu() {
         String menu =   "\n=== main menu ===\n"
                         + "\n1. sign up\n"
@@ -41,9 +42,43 @@ public abstract class MasterMenu {
                 if (selectedMenu.equalsIgnoreCase("1")) {
                     System.out.println("\n=== sign up ===");
 
+                    System.out.print("enter new username: ");
+                    String createUsername = in.nextLine();
+
+                    System.out.print("enter new password: ");
+                    String createPassword = in.nextLine();
+
+                    User createUser = new User();
+
+                    try {
+                        createUser.setUsername(createUsername);
+                        createUser.setPassword(createPassword);
+                        createUser.setLocked(Boolean.FALSE);
+                        userService.signUp(em, createUser);
+                        System.out.println("new user added");
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    } finally {
+                        em.close();
+                    }
+
                     startMenu();
                 } else if (selectedMenu.equalsIgnoreCase("2")) {
                     System.out.println("\n=== sign in ===");
+
+                    System.out.print("enter username: ");
+                    String inputUsername = in.nextLine();
+
+                    System.out.print("enter password: ");
+                    String inputPassword = in.nextLine();
+
+                    try {
+                        userService.userAuth(em, inputUsername, inputPassword);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    } finally {
+                        em.close();
+                    }
 
                     startMenu();
                 } else if (selectedMenu.equalsIgnoreCase("0")) {
@@ -55,7 +90,7 @@ public abstract class MasterMenu {
                     startMenu();
                 }
             } catch (Exception e) {
-                System.err.println("invalid input\n");
+                System.out.println(e.getMessage());
                 startMenu();
             }
         }
