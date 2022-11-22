@@ -3,13 +3,14 @@ package com.enigmacamp.service.implementations;
 import com.enigmacamp.model.User;
 import com.enigmacamp.repo.implementations.UserRepo;
 import com.enigmacamp.service.interfaces.IUserService;
+import com.enigmacamp.util.PasswordEncrypt;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 
 public class UserService implements IUserService {
-    private UserRepo userRepo;
+    private final UserRepo userRepo;
 
     public UserService(UserRepo userRepo) {
         this.userRepo = userRepo;
@@ -45,6 +46,18 @@ public class UserService implements IUserService {
         String dbUsername = user.getUsername();
         String dbPassword = user.getPassword();
 
-        return username.equals(dbUsername) && password.equals(dbPassword);
+        String decryptedDbPassword = PasswordEncrypt.startDecrypt(dbPassword);
+
+        System.out.println("== decrypted pass ==");
+        System.out.println(decryptedDbPassword);
+        System.out.println("== password ==");
+        System.out.println(password);
+
+        if (username.equals(dbUsername) && password.equals(decryptedDbPassword)) {
+            System.out.println("hi, " + username);
+            return true;
+        }
+
+        return false;
     }
 }

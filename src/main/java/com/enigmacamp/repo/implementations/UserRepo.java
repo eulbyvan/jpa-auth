@@ -3,6 +3,7 @@ package com.enigmacamp.repo.implementations;
 import com.enigmacamp.model.User;
 import com.enigmacamp.repo.interfaces.IUserRepo;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 
 import java.util.List;
