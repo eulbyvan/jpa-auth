@@ -16,8 +16,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void signUp(EntityManager em, User user) {
-        userRepo.create(em, user);
+    public void signUp(User user) {
+        userRepo.create(user);
     }
 
     @Override

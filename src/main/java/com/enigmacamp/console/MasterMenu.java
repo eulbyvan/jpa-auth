@@ -3,6 +3,7 @@ package com.enigmacamp.console;
 import com.enigmacamp.model.User;
 import com.enigmacamp.repo.implementations.UserRepo;
 import com.enigmacamp.service.implementations.UserService;
+import com.enigmacamp.util.PasswordEncrypt;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -14,7 +15,7 @@ public abstract class MasterMenu {
     private static final Scanner in = new Scanner(System.in);
     private static Boolean isClosed = false;
     private static final EntityManager em = createEM();
-    private static final UserRepo userRepo = new UserRepo();
+    private static final UserRepo userRepo = new UserRepo(em);
     private static final UserService userService = new UserService(userRepo);
     private static String selectMenu() {
         String menu =   "\n=== main menu ===\n"
@@ -35,7 +36,6 @@ public abstract class MasterMenu {
 
     private static void startMenu() throws SQLException {
         String selectedMenu = selectMenu();
-        String selectedSubMenu;
 
         while (!isClosed) {
             try {
@@ -48,13 +48,15 @@ public abstract class MasterMenu {
                     System.out.print("enter new password: ");
                     String createPassword = in.nextLine();
 
+                    createPassword = PasswordEncrypt.startEncrypt(createPassword);
+
                     User createUser = new User();
 
                     try {
                         createUser.setUsername(createUsername);
                         createUser.setPassword(createPassword);
                         createUser.setLocked(Boolean.FALSE);
-                        userService.signUp(em, createUser);
+                        userService.signUp(createUser);
                         System.out.println("new user added");
                     } catch (Exception e) {
                         throw new RuntimeException(e);

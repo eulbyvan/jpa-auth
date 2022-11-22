@@ -8,9 +8,14 @@ import jakarta.persistence.TypedQuery;
 import java.util.List;
 
 public class UserRepo implements IUserRepo {
+    private final EntityManager em;
+
+    public UserRepo(EntityManager em) {
+        this.em = em;
+    }
 
     @Override
-    public void create(EntityManager em, User user) {
+    public void create(User user) {
         em.getTransaction().begin();
         em.persist(user);
         em.getTransaction().commit();
@@ -37,9 +42,4 @@ public class UserRepo implements IUserRepo {
     @Override
     public void delete(EntityManager em, String id) {
     }
-
-//    @Override
-//    public Boolean auth(EntityManager em, String id) {
-//
-//    }
 }
